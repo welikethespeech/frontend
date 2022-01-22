@@ -21,12 +21,15 @@ export default {
                 }),
             })
                 .then((res) => {
-                    console.log("Request complete! response:", res);
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    this.emitter.emit("update_table", null);
                 })
                 .catch((err) => {
                     console.error("Couldn't send post", err);
                 });
-            this.emitter.emit("update_table", null);
         },
     },
 };

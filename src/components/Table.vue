@@ -7,9 +7,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in companies" :key="item.name">
-                <td>{{ item.name }}</td>
-                <td>{{ item.score }}</td>
+            <tr v-for="(score, company) in companies" :key="company">
+                <td>{{ company }}</td>
+                <td>{{ score }}</td>
             </tr>
         </tbody>
     </table>
@@ -23,36 +23,29 @@ export default {
 
     mounted() {
         this.emitter.on("update_table", (data) => {
-            this.updateCompanies();
+            this.getCompanies();
         });
     },
 
     created() {
-        this.updateCompanies();
-    },
-
-    watch: {
-        companies(nextVal, preVal) {
-            // do stuff if needs to
-        },
+        this.getCompanies();
     },
 
     methods: {
-        updateCompanies() {
-            this.companies = this.getCompanies();
-        },
         getCompanies() {
-            let fetchResult = [];
             fetch("https://welikethespeech.herokuapp.com/api/rankings", {
                 method: "GET",
             })
                 .then((res) => {
-                    fetchResult = res;
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    this.companies = data;
                 })
                 .catch((err) => {
                     console.error("Couldn't send get", err);
                 });
-            return fetchResult;
         },
     },
 };
