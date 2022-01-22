@@ -57,7 +57,7 @@ export default {
           this.emitter.emit("update_table", null);
 
           this.$nextTick(function () {
-            this.txtboxValue = data.text;
+            this.txtboxValue = data.scraped;
           });
         })
         .catch((err) => {
