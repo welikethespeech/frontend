@@ -1,36 +1,42 @@
 <template>
-  <form autocomplete="off" @submit.prevent="submitForm">
-    <!-- <label for="speech">Company Name:</label><br /> -->
-    <input
-      type="text"
-      id="company"
-      name="company"
-      placeholder="Company name..."
-      class="form-control"
-    />
-    <input
-      type="text"
-      id="url"
-      name="url"
-      placeholder="URl to the website"
-      class="form-control"
-    />
-    <input type="submit" class="btn btn-dark w-100" />
-    <small v-if="showFormMessage" id="emailHelp" class="form-text text-muted">{{
-      formMessage
-    }}</small>
-  </form>
+  <div>
+    <form autocomplete="off" @submit.prevent="submitForm">
+      <input
+        type="text"
+        id="url"
+        name="url"
+        placeholder="URl to the website"
+        class="form-control"
+      />
+      <input type="submit" class="btn btn-dark w-100" value="Transcribe" />
+      <small
+        v-if="showFormMessage"
+        id="emailHelp"
+        class="form-text text-muted"
+        >{{ formMessage }}</small
+      >
+    </form>
+    <TextForm :ttext="txtboxValue" />
+  </div>
 </template>
 
 <script>
+import TextForm from "./TextForm.vue";
+
 export default {
+  components: {
+    TextForm,
+  },
+
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
+    txtboxValue: "",
   }),
+
   methods: {
     submitForm(submitEvent) {
-      fetch("https://welikethespeech.herokuapp.com/api/score-website", {
+      fetch("https://welikethespeech.herokuapp.com/api/transcribe-website", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,10 +49,15 @@ export default {
         })
         .then((data) => {
           console.log(data);
-          this.showFormMessage = true;
+          this.showFormMessage = false;
           this.emitter.emit("update_table", null);
+
+          this.$nextTick(function () {
+            this.txtboxValue = data.text;
+          });
         })
         .catch((err) => {
+          this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
     },

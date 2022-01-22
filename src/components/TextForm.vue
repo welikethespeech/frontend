@@ -17,6 +17,7 @@
       cols="120"
       placeholder="Enter speech text here..."
       class="form-control"
+      :value="ttext"
     />
     <input type="submit" class="btn btn-dark w-100" />
     <small v-if="showFormMessage" id="emailHelp" class="form-text text-muted">{{
@@ -27,10 +28,19 @@
 
 <script>
 export default {
+  props: {
+    ttext: {
+      required: false,
+      type: String,
+      default: "",
+    },
+  },
+
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
   }),
+
   methods: {
     submitForm(submitEvent) {
       fetch("https://welikethespeech.herokuapp.com/api/score-speech", {
