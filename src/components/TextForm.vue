@@ -12,7 +12,7 @@
 export default {
     methods: {
         submitForm(submitEvent) {
-            fetch("/api/score-speech", {
+            fetch("https://welikethespeech.herokuapp.com/api/score-speech", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -24,7 +24,7 @@ export default {
                     console.log("Request complete! response:", res);
                 })
                 .catch((err) => {
-                    console.err("Couldn't send post", err);
+                    console.error("Couldn't send post", err);
                 });
             this.emitter.emit("update_table", null);
         },

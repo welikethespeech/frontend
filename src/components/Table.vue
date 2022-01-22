@@ -42,13 +42,17 @@ export default {
             this.companies = this.getCompanies();
         },
         getCompanies() {
-            return [
-                { name: "company 1", score: 0.99 },
-                { name: "company 1", score: 0.35 },
-                { name: "company 2", score: 0.69 },
-                { name: "company 3", score: 0.91 },
-                { name: "company 4", score: 0.95 },
-            ];
+            let fetchResult = [];
+            fetch("https://welikethespeech.herokuapp.com/api/rankings", {
+                method: "GET",
+            })
+                .then((res) => {
+                    fetchResult = res;
+                })
+                .catch((err) => {
+                    console.error("Couldn't send get", err);
+                });
+            return fetchResult;
         },
     },
 };
