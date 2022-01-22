@@ -16,7 +16,8 @@
         >{{ formMessage }}</small
       >
     </form>
-    <TextForm :ttext="txtboxValue" />
+
+    <TextForm ref="textForm" />
   </div>
 </template>
 
@@ -31,7 +32,6 @@ export default {
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
-    txtboxValue: "",
     websiteWait: false,
   }),
 
@@ -56,9 +56,7 @@ export default {
           this.showFormMessage = false;
           this.emitter.emit("update_table", null);
 
-          this.$nextTick(function () {
-            this.txtboxValue = data.scraped;
-          });
+          this.$refs.textForm.setText(data.scraped);
         })
         .catch((err) => {
           this.websiteWait = false;

@@ -22,7 +22,8 @@
         >{{ formMessage }}</small
       >
     </form>
-    <TextForm :ttext="txtboxValue" />
+
+    <TextForm ref="textForm" />
   </div>
 </template>
 
@@ -37,13 +38,11 @@ export default {
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
-    txtboxValue: "",
     videoWait: false,
   }),
 
   methods: {
     submitForm(submitEvent) {
-      this.txtboxValue = "";
       this.videoWait = true;
 
       fetch("https://welikethespeech.herokuapp.com/api/transcribe", {
@@ -62,10 +61,7 @@ export default {
           console.log(data);
           this.showFormMessage = false;
           this.emitter.emit("update_table", null);
-
-          this.$nextTick(function () {
-            this.txtboxValue = data.transcription;
-          });
+          this.$refs.textForm.setText(data.transcription);
         })
         .catch((err) => {
           this.videoWait = false;

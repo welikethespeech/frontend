@@ -17,7 +17,6 @@
       cols="120"
       placeholder="Enter speech text here..."
       class="form-control"
-      :value="ttext"
     />
 
     <button v-if="submitWait" class="btn btn-dark w-100" disabled>
@@ -34,21 +33,18 @@
 
 <script>
 export default {
-  props: {
-    ttext: {
-      required: false,
-      type: String,
-      default: "",
-    },
-  },
-
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
     submitWait: false,
+    message: "",
   }),
 
   methods: {
+    setText(text) {
+      this.$el.querySelector("#speech").value = text;
+    },
+
     submitForm(submitEvent) {
       this.submitWait = true;
 
