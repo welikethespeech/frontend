@@ -46,7 +46,10 @@
   </div>
 
   <br />
-  <Table />
+  <h2 id="leaderboard">Leaderboard</h2>
+  <div class="leaderboard-wrapper">
+    <Table />
+  </div>
 </template>
 
 <script>
@@ -64,3 +67,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.leaderboard-wrapper {
+  min-height: 90vh;
+}
+</style>

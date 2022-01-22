@@ -4,6 +4,9 @@
       <h1 class="masthead-title">
         <a href="/">WeLikeTheSpeech</a>
       </h1>
+      <div class="masthead-nav">
+        <a href="/#leaderboard">leaderboard</a>
+      </div>
     </div>
     <div class="page-content">
       <Home />
