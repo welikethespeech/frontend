@@ -70,9 +70,10 @@ export default {
         })
         .then((data) => {
           console.log(data);
-          this.showFormMessage = false;
           this.emitter.emit("update_table", null);
-          alert("score is " + data.score);
+          this.showFormMessage = true;
+
+          this.formMessage = "Score is: " + data.score;
         })
         .catch((err) => {
           this.submitWait = false;
