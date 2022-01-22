@@ -46,6 +46,7 @@ export default {
         })
         .then((data) => {
           console.log(data);
+          this.showFormMessage = true;
           this.emitter.emit("update_table", null);
         })
         .catch((err) => {
