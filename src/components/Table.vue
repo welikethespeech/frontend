@@ -1,16 +1,18 @@
 <template>
-    <thead>
-        <tr>
-            <th class="text-left">Company</th>
-            <th class="text-left">Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="item in companies" :key="item.name">
-            <td>{{ item.name }}</td>
-            <td>{{ item.score }}</td>
-        </tr>
-    </tbody>
+    <table class="center">
+        <thead>
+            <tr>
+                <th class="text-left">Company</th>
+                <th class="text-left">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in companies" :key="item.name">
+                <td>{{ item.name }}</td>
+                <td>{{ item.score }}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
@@ -19,8 +21,14 @@ export default {
         companies: [],
     }),
 
+    mounted() {
+        this.emitter.on("update_table", (data) => {
+            this.updateCompanies();
+        });
+    },
+
     created() {
-        this.companies = this.getCompanies();
+        this.updateCompanies();
     },
 
     watch: {
@@ -30,6 +38,9 @@ export default {
     },
 
     methods: {
+        updateCompanies() {
+            this.companies = this.getCompanies();
+        },
         getCompanies() {
             return [
                 { name: "company 1", score: 0.99 },
@@ -42,3 +53,10 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
