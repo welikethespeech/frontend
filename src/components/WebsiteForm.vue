@@ -8,7 +8,7 @@
         placeholder="URl to the website"
         class="form-control"
       />
-      <input type="submit" class="btn btn-dark w-100" value="Transcribe" />
+      <input type="submit" class="btn btn-dark w-100" value="Extract" />
       <small
         v-if="showFormMessage"
         id="emailHelp"

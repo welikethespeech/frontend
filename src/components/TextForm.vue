@@ -1,43 +1,56 @@
 <template>
-  <form autocomplete="off" @submit.prevent="submitForm">
-    <!-- <label for="speech">Company Name:</label><br /> -->
-    <input
-      type="text"
-      id="company"
-      name="company"
-      placeholder="Company name..."
-      class="form-control"
-    />
-    <!-- <label for="speech">Speech:</label><br /> -->
-    <textarea
-      type="text"
-      id="speech"
-      name="speech"
-      rows="7"
-      cols="120"
-      placeholder="Enter speech text here..."
-      class="form-control"
-    />
+  <div>
+    <form autocomplete="off" @submit.prevent="submitForm">
+      <!-- <label for="speech">Company Name:</label><br /> -->
+      <input
+        type="text"
+        id="company"
+        name="company"
+        placeholder="Company name..."
+        class="form-control"
+      />
+      <!-- <label for="speech">Speech:</label><br /> -->
+      <textarea
+        type="text"
+        id="speech"
+        name="speech"
+        rows="7"
+        cols="120"
+        placeholder="Enter speech text here..."
+        class="form-control"
+      />
 
-    <button v-if="submitWait" class="btn btn-dark w-100" disabled>
-      <span class="spinner-border spinner-border-sm p-b-0"></span>
-    </button>
+      <button v-if="submitWait" class="btn btn-dark w-100" disabled>
+        <span class="spinner-border spinner-border-sm p-b-0"></span>
+      </button>
 
-    <input v-else type="submit" class="btn btn-dark w-100" />
+      <input v-else type="submit" class="btn btn-dark w-100" />
 
-    <small v-if="showFormMessage" id="emailHelp" class="form-text text-muted">{{
-      formMessage
-    }}</small>
-  </form>
+      <small
+        v-if="showFormMessage"
+        id="emailHelp"
+        class="form-text text-muted"
+        >{{ formMessage }}</small
+      >
+    </form>
+    <Results :data="resultsData" />
+  </div>
 </template>
 
 <script>
+import Results from "./Results.vue";
+
 export default {
+  components: {
+    Results,
+  },
+
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
     submitWait: false,
     message: "",
+    resultsData: null,
   }),
 
   methods: {
@@ -71,9 +84,8 @@ export default {
         .then((data) => {
           console.log(data);
           this.emitter.emit("update_table", null);
-          this.showFormMessage = true;
-
-          this.formMessage = "Score is: " + data.score;
+          this.showFormMessage = false;
+          this.resultsData = data;
         })
         .catch((err) => {
           this.submitWait = false;
