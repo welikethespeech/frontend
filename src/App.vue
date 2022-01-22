@@ -1,25 +1,35 @@
 <template>
-    <Home />
+  <div class="container">
+    <div class="masthead">
+      <h1 class="masthead-title">
+        <a href="/">WeLikeTheSpeech</a>
+      </h1>
+    </div>
+    <div class="page-content">
+      <Home />
+    </div>
+  </div>
 </template>
 
 <script>
 import Home from "./components/Home.vue";
 
 export default {
-    name: "App",
-    components: {
-        Home,
-    },
+  name: "App",
+  components: {
+    Home,
+  },
 };
 </script>
 
 <style>
+@import "./assets/style.css";
+
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>

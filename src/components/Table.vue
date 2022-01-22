@@ -1,59 +1,59 @@
 <template>
-    <table class="center">
-        <thead>
-            <tr>
-                <th class="text-left">Company</th>
-                <th class="text-left">Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(score, company) in companies" :key="company">
-                <td>{{ company }}</td>
-                <td>{{ score }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="center">
+    <thead>
+      <tr>
+        <th class="text-left">Company</th>
+        <th class="text-left">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(score, company) in companies" :key="company">
+        <td>{{ company }}</td>
+        <td>{{ score }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
 export default {
-    data: () => ({
-        companies: [],
-    }),
+  data: () => ({
+    companies: [],
+  }),
 
-    mounted() {
-        this.emitter.on("update_table", (data) => {
-            this.getCompanies();
+  mounted() {
+    this.emitter.on("update_table", (data) => {
+      this.getCompanies();
+    });
+  },
+
+  created() {
+    this.getCompanies();
+  },
+
+  methods: {
+    getCompanies() {
+      fetch("https://welikethespeech.herokuapp.com/api/rankings", {
+        method: "GET",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          this.companies = data;
+        })
+        .catch((err) => {
+          console.error("Couldn't send get", err);
         });
     },
-
-    created() {
-        this.getCompanies();
-    },
-
-    methods: {
-        getCompanies() {
-            fetch("https://welikethespeech.herokuapp.com/api/rankings", {
-                method: "GET",
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    this.companies = data;
-                })
-                .catch((err) => {
-                    console.error("Couldn't send get", err);
-                });
-        },
-    },
+  },
 };
 </script>
 
 <style scoped>
 .center {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
