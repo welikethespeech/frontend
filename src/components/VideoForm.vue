@@ -38,7 +38,7 @@ export default {
     submitForm(submitEvent) {
       this.txtboxValue = "";
 
-      fetch("https://welikethespeech.herokuapp.com/api/transcribe-video", {
+      fetch("https://welikethespeech.herokuapp.com/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ export default {
           this.emitter.emit("update_table", null);
 
           this.$nextTick(function () {
-            this.txtboxValue = data.text;
+            this.txtboxValue = data.transcription;
           });
         })
         .catch((err) => {

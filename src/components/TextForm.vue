@@ -52,14 +52,22 @@ export default {
         }),
       })
         .then((res) => {
-          return res.json();
+          if (res.status == 200) {
+            return res.json();
+          } else {
+            res.json().then((data) => {
+              this.showFormMessage = true;
+              this.formMessage = data.message;
+            });
+          }
         })
         .then((data) => {
           console.log(data);
-          this.showFormMessage = true;
+          this.showFormMessage = false;
           this.emitter.emit("update_table", null);
         })
         .catch((err) => {
+          this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
     },

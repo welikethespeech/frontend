@@ -240,11 +240,6 @@ tbody tr:nth-child(odd) th {
   margin-left: auto;
   margin-right: auto;
 }
-@media (min-width: 38rem) {
-  .container {
-    padding: 5rem 1rem;
-  }
-}
 
 .masthead-title {
   font-weight: 300;
