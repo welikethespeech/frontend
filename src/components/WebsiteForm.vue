@@ -32,19 +32,23 @@ export default {
     showFormMessage: false,
     formMessage: "you are bad",
     txtboxValue: "",
+    websiteWait: false,
   }),
 
   methods: {
     submitForm(submitEvent) {
-      fetch("https://welikethespeech.herokuapp.com/api/transcribe-website", {
+      this.websiteWait = true;
+
+      fetch("https://welikethespeech.herokuapp.com/api/websitescrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          company: submitEvent.target.elements.company.value,
-          text: submitEvent.target.elements.url.value,
+          url: submitEvent.target.elements.url.value,
         }),
       })
         .then((res) => {
+          this.websiteWait = false;
+
           return res.json();
         })
         .then((data) => {
@@ -57,6 +61,8 @@ export default {
           });
         })
         .catch((err) => {
+          this.websiteWait = false;
+
           this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
@@ -68,5 +74,9 @@ export default {
 <style scoped>
 form * {
   margin-bottom: 0.5rem !important;
+}
+
+span {
+  margin-bottom: 0 !important;
 }
 </style>

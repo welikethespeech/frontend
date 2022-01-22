@@ -8,7 +8,13 @@
         placeholder="URl to the video"
         class="form-control"
       />
-      <input type="submit" class="btn btn-dark w-100" value="Transcribe" />
+
+      <button v-if="videoWait" class="btn btn-dark w-100" disabled>
+        <span class="spinner-border spinner-border-sm p-b-0"></span>
+      </button>
+
+      <input v-else type="submit" class="btn btn-dark w-100" />
+
       <small
         v-if="showFormMessage"
         id="emailHelp"
@@ -32,11 +38,13 @@ export default {
     showFormMessage: false,
     formMessage: "you are bad",
     txtboxValue: "",
+    videoWait: false,
   }),
 
   methods: {
     submitForm(submitEvent) {
       this.txtboxValue = "";
+      this.videoWait = true;
 
       fetch("https://welikethespeech.herokuapp.com/api/transcribe", {
         method: "POST",
@@ -46,6 +54,8 @@ export default {
         }),
       })
         .then((res) => {
+          this.videoWait = false;
+
           return res.json();
         })
         .then((data) => {
@@ -58,6 +68,8 @@ export default {
           });
         })
         .catch((err) => {
+          this.videoWait = false;
+
           this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
@@ -69,5 +81,9 @@ export default {
 <style scoped>
 form * {
   margin-bottom: 0.5rem !important;
+}
+
+span {
+  margin-bottom: 0 !important;
 }
 </style>

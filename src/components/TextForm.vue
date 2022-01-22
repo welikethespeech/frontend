@@ -19,7 +19,13 @@
       class="form-control"
       :value="ttext"
     />
-    <input type="submit" class="btn btn-dark w-100" />
+
+    <button v-if="submitWait" class="btn btn-dark w-100" disabled>
+      <span class="spinner-border spinner-border-sm p-b-0"></span>
+    </button>
+
+    <input v-else type="submit" class="btn btn-dark w-100" />
+
     <small v-if="showFormMessage" id="emailHelp" class="form-text text-muted">{{
       formMessage
     }}</small>
@@ -39,10 +45,13 @@ export default {
   data: () => ({
     showFormMessage: false,
     formMessage: "you are bad",
+    submitWait: false,
   }),
 
   methods: {
     submitForm(submitEvent) {
+      this.submitWait = true;
+
       fetch("https://welikethespeech.herokuapp.com/api/score-speech", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,6 +61,8 @@ export default {
         }),
       })
         .then((res) => {
+          this.submitWait = false;
+
           if (res.status == 200) {
             return res.json();
           } else {
@@ -65,8 +76,11 @@ export default {
           console.log(data);
           this.showFormMessage = false;
           this.emitter.emit("update_table", null);
+          alert("score is " + data.score);
         })
         .catch((err) => {
+          this.submitWait = false;
+
           this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
@@ -81,6 +95,10 @@ textarea#speech {
 }
 
 form * {
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0.5rem;
+}
+
+span {
+  margin-bottom: 0 !important;
 }
 </style>
