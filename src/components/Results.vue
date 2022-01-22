@@ -4,7 +4,7 @@
     <table v-if="Object.keys(data.highlighted).length > 0" class="center">
       <thead>
         <tr>
-          <th class="text-left">Sentence</th>
+          <th class="text-left">Sentence Breakdown</th>
           <th class="text-left">Score</th>
         </tr>
       </thead>

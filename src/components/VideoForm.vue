@@ -75,10 +75,20 @@ export default {
 </script>
 
 <style scoped>
+form {
+  display: flex;
+}
 form * {
   margin-bottom: 0.5rem !important;
 }
 
+form #url {
+  margin-right: 0.5rem;
+  flex: 1;
+}
+form input.btn {
+  flex: 0;
+}
 span {
   margin-bottom: 0 !important;
 }
