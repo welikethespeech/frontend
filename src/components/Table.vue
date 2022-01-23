@@ -9,7 +9,9 @@
     <tbody>
       <tr v-for="(score, company) in companies" :key="company">
         <td>{{ company }}</td>
-        <td>{{ score }}</td>
+        <td>
+          {{ score.toFixed(2) }}
+        </td>
       </tr>
     </tbody>
   </table>
