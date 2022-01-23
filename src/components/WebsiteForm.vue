@@ -5,7 +5,7 @@
         type="text"
         id="url"
         name="url"
-        placeholder="URl to the website"
+        placeholder="URL to the website"
         class="form-control"
       />
       <input type="submit" class="btn btn-dark w-100" value="Extract" />
@@ -49,11 +49,18 @@ export default {
         .then((res) => {
           this.websiteWait = false;
 
-          return res.json();
+          if (res.status == 200) {
+            return res.json();
+          } else {
+            res.json().then((data) => {
+              this.$refs.setTextForms(data.message);
+            });
+          }
         })
         .then((data) => {
           console.log(data);
-          this.showFormMessage = false;
+          this.$refs.textForm.removeErrorText();
+
           this.emitter.emit("update_table", null);
 
           this.$refs.textForm.setText(data.scraped);
@@ -61,7 +68,6 @@ export default {
         .catch((err) => {
           this.websiteWait = false;
 
-          this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
     },

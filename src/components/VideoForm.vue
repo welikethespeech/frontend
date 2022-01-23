@@ -5,7 +5,7 @@
         type="text"
         id="url"
         name="url"
-        placeholder="URl to the video"
+        placeholder="URL to the video"
         class="form-control"
       />
 
@@ -14,13 +14,6 @@
       </button>
 
       <input v-else type="submit" class="btn btn-dark w-100" />
-
-      <small
-        v-if="showFormMessage"
-        id="emailHelp"
-        class="form-text text-muted"
-        >{{ formMessage }}</small
-      >
     </form>
 
     <TextForm ref="textForm" />
@@ -36,8 +29,6 @@ export default {
   },
 
   data: () => ({
-    showFormMessage: false,
-    formMessage: "error",
     videoWait: false,
   }),
 
@@ -55,18 +46,24 @@ export default {
         .then((res) => {
           this.videoWait = false;
 
-          return res.json();
+          if (res.status == 200) {
+            return res.json();
+          } else {
+            res.json().then((data) => {
+              this.$refs.textForm.setErrorText(data.message);
+            });
+          }
         })
         .then((data) => {
           console.log(data);
-          this.showFormMessage = false;
+          this.$refs.textForm.removeErrorText();
+
           this.emitter.emit("update_table", null);
           this.$refs.textForm.setText(data.transcription);
         })
         .catch((err) => {
           this.videoWait = false;
 
-          this.showFormMessage = true;
           console.error("Couldn't send post", err);
         });
     },

@@ -47,7 +47,7 @@ export default {
 
   data: () => ({
     showFormMessage: false,
-    formMessage: "you are bad",
+    formMessage: "error",
     submitWait: false,
     message: "",
     resultsData: null,
@@ -56,6 +56,15 @@ export default {
   methods: {
     setText(text) {
       this.$el.querySelector("#speech").value = text;
+    },
+
+    setErrorText(text) {
+      this.showFormMessage = true;
+      this.formMessage = text;
+    },
+
+    removeErrorText() {
+      this.showFormMessage = false;
     },
 
     submitForm(submitEvent) {
