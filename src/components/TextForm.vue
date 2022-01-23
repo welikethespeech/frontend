@@ -16,7 +16,7 @@
         name="speech"
         rows="7"
         cols="120"
-        placeholder="Enter speech text here..."
+        placeholder="Enter speech text here... try something like 'Here at goodcorp, we like trees. We also hate fossil fuels.'"
         class="form-control"
       />
 
