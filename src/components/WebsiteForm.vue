@@ -31,7 +31,7 @@ export default {
 
   data: () => ({
     showFormMessage: false,
-    formMessage: "you are bad",
+    formMessage: "error",
     websiteWait: false,
   }),
 
@@ -81,7 +81,7 @@ form #url {
   margin-right: 0.5rem;
   flex: 1;
 }
-form input.btn {
+form .btn {
   flex: 0;
 }
 
