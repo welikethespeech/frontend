@@ -7,10 +7,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(score, company) in companies" :key="company">
-        <td>{{ company }}</td>
+      <tr v-for="data in companies" :key="data">
+        <td>{{ data.company }}</td>
         <td>
-          {{ score.toFixed(2) }}
+          {{ data.average_score.toFixed(2) }}
         </td>
       </tr>
     </tbody>
